@@ -10,11 +10,15 @@ const PORT = 8080;
 //database connection
 databaseConnection();
 
+//multer config
+const { multer, storage } = require("./middleware/multerConfig");
+const upload = multer({ storage: storage });
+
 app.get("/", (req, res) => {
   res.send("Hello World !!");
 });
 
-app.post("/book", async (req, res) => {
+app.post("/book", upload.single("image"), async (req, res) => {
   const {
     bookName,
     bookPrice,
